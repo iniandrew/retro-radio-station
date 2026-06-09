@@ -1,15 +1,14 @@
-const { Redis } = require('@upstash/redis');
-
 let redis = null;
 try {
+  const { Redis } = require('@upstash/redis');
   if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
     redis = new Redis({
       url: process.env.UPSTASH_REDIS_REST_URL,
       token: process.env.UPSTASH_REDIS_REST_TOKEN,
     });
-  } else {
-    console.warn('Upstash Redis not configured — trending disabled');
   }
+} catch (e) {
+  console.warn('Upstash Redis not available — trending disabled');
 }
 
 module.exports = async function handler(req, res) {
@@ -19,7 +18,9 @@ module.exports = async function handler(req, res) {
 
   try {
     let tracks = [];
-    try { tracks = JSON.parse(await redis.get('trending') || '[]'); } catch { tracks = []; }
+    if (redis) {
+      try { tracks = JSON.parse(await redis.get('trending') || '[]'); } catch { tracks = []; }
+    }
 
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
@@ -37,7 +38,7 @@ module.exports = async function handler(req, res) {
 
     res.json(trending);
   } catch (err) {
-    console.error('Redis read failed:', err);
+    console.error('Trending fetch failed:', err);
     res.status(500).json({ error: 'Failed to fetch trending' });
   }
 };
