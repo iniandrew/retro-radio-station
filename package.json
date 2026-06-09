@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@upstash/redis": "^1.38.0",
     "better-sqlite3": "^12.10.0",
     "express": "^5.2.1"
   }

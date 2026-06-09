@@ -89,6 +89,23 @@ media-players/
 |----------|---------|-------------|
 | `PORT` | `3000` | Server port |
 
+## Deployment
+
+### GitHub Pages (frontend only)
+
+Push to `main` to auto-deploy. The workflow copies `public/` to GitHub Pages.
+
+> **Note:** GitHub Pages serves static files only. The player and playlist work. The trending feature requires the Express backend — use a hosting platform that supports Node.js for the full experience.
+
+### Full stack (with trending)
+
+Deploy to any Node.js host — [Render](https://render.com), [Railway](https://railway.app), [Vercel](https://vercel.com), [Fly.io](https://fly.io), etc.
+
+```bash
+npm install
+npm start    # or npm run dev for hot reload
+```
+
 ## License
 
 MIT
