@@ -17,6 +17,9 @@ window.WindowManager = (function () {
   // Drag state
   var dragState = null;
 
+  // Resize state
+  var resizeState = null;
+
   // Reference to the container element
   function getContainer() {
     return document.getElementById('windows-container');
@@ -65,12 +68,15 @@ window.WindowManager = (function () {
     var win = windows.get(id);
     if (!win) return;
 
-    win.element.remove();
-    windows.delete(id);
+    win.element.classList.add('closing');
+    setTimeout(function () {
+      win.element.remove();
+      windows.delete(id);
 
-    if (window.Taskbar && Taskbar.removeWindowTab) {
-      Taskbar.removeWindowTab(id);
-    }
+      if (window.Taskbar && Taskbar.removeWindowTab) {
+        Taskbar.removeWindowTab(id);
+      }
+    }, 150);
   }
 
   /**
@@ -96,6 +102,10 @@ window.WindowManager = (function () {
     if (!win) return;
 
     win.element.style.display = 'flex';
+    win.element.classList.remove('restoring');
+    // Force reflow to restart animation
+    void win.element.offsetWidth;
+    win.element.classList.add('restoring');
     win.minimized = false;
 
     focus(id);
@@ -111,6 +121,9 @@ window.WindowManager = (function () {
   function maximize(id) {
     var win = windows.get(id);
     if (!win) return;
+
+    // Add transition class for smooth animation
+    win.element.classList.add('maximizing');
 
     if (win.maximized) {
       // Restore to previous bounds
@@ -138,6 +151,11 @@ window.WindowManager = (function () {
       win.element.style.borderRadius = '0';
       win.maximized = true;
     }
+
+    // Remove transition class after animation completes
+    setTimeout(function () {
+      if (win.element) win.element.classList.remove('maximizing');
+    }, 200);
 
     // Update titlebar maximize button text
     var maxBtn = win.element.querySelector('.window-btn-maximize');
@@ -254,6 +272,12 @@ window.WindowManager = (function () {
       focus(id);
     });
 
+    // Double-click titlebar to maximize/restore
+    titlebar.addEventListener('dblclick', function (e) {
+      if (e.target.closest('.window-controls')) return;
+      maximize(id);
+    });
+
     // Dragging setup (on titlebar only, not on controls)
     titlebar.addEventListener('mousedown', function (e) {
       // Don't drag if clicking a control button
@@ -283,6 +307,28 @@ window.WindowManager = (function () {
       prevBounds: null
     });
 
+    // Resize handle
+    var resizeHandle = document.createElement('div');
+    resizeHandle.className = 'window-resize-handle';
+    winEl.appendChild(resizeHandle);
+
+    resizeHandle.addEventListener('mousedown', function (e) {
+      var win = windows.get(id);
+      if (win && win.maximized) return;
+      e.preventDefault();
+      e.stopPropagation();
+
+      resizeState = {
+        id: id,
+        startX: e.clientX,
+        startY: e.clientY,
+        startW: winEl.offsetWidth,
+        startH: winEl.offsetHeight
+      };
+
+      focus(id);
+    });
+
     container.appendChild(winEl);
 
     // Notify taskbar
@@ -293,8 +339,26 @@ window.WindowManager = (function () {
     focus(id);
   }
 
-  // Global mouse handlers for dragging
+  // Global mouse handlers for dragging and resizing
   document.addEventListener('mousemove', function (e) {
+    // Handle resize
+    if (resizeState) {
+      var rw = windows.get(resizeState.id);
+      if (!rw) { resizeState = null; return; }
+
+      var newW = Math.max(200, resizeState.startW + (e.clientX - resizeState.startX));
+      var newH = Math.max(100, resizeState.startH + (e.clientY - resizeState.startY));
+
+      // Clamp to viewport
+      var rect = rw.element.getBoundingClientRect();
+      newW = Math.min(newW, window.innerWidth - rect.left);
+      newH = Math.min(newH, window.innerHeight - rect.top - 40);
+
+      rw.element.style.width = newW + 'px';
+      rw.element.style.height = newH + 'px';
+      return;
+    }
+
     if (!dragState) return;
 
     var win = windows.get(dragState.id);
@@ -320,6 +384,7 @@ window.WindowManager = (function () {
 
   document.addEventListener('mouseup', function () {
     dragState = null;
+    resizeState = null;
   });
 
   // Public API
@@ -331,6 +396,7 @@ window.WindowManager = (function () {
     restore: restore,
     maximize: maximize,
     focus: focus,
+    isMinimized: function (id) { var w = windows.get(id); return w ? w.minimized : false; },
     getWindows: function () { return windows; }
   };
 })();

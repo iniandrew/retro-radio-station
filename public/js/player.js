@@ -76,17 +76,79 @@ window.Player = (function () {
     // Update seek slider
     var seekSlider = document.querySelector('.winamp-seek input[type="range"]');
     if (seekSlider) {
-      seekSlider.value = state.duration > 0 ? (state.elapsed / state.duration) * 100 : 0;
+      var pct = state.duration > 0 ? (state.elapsed / state.duration) * 100 : 0;
+      seekSlider.value = pct;
+      seekSlider.style.setProperty('--seek-pct', pct + '%');
     }
+
+    // Update volume slider fill
+    var volumeSlider = document.querySelector('.winamp-volume-slider');
+    if (volumeSlider) {
+      volumeSlider.style.setProperty('--vol-pct', state.volume + '%');
+    }
+
+    // Update volume icon
+    updateVolumeIcon();
 
     // Update play/pause button visual
     var playBtn = document.querySelector('.winamp-btn-play');
     if (playBtn) {
       if (state.isPlaying) {
         playBtn.textContent = '||';
+        playBtn.classList.add('playing');
       } else {
         playBtn.textContent = '>';
+        playBtn.classList.remove('playing');
       }
+    }
+
+    // Update video area glow
+    var videoArea = document.querySelector('.winamp-video-area');
+    if (videoArea) {
+      if (state.isPlaying) {
+        videoArea.classList.add('playing');
+      } else {
+        videoArea.classList.remove('playing');
+      }
+    }
+
+    // Update now-playing widget if it exists
+    if (window.NowPlayingWidget) {
+      NowPlayingWidget.update(state);
+    }
+  }
+
+  /**
+   * Update volume icon based on current level.
+   */
+  function updateVolumeIcon() {
+    var iconEl = document.querySelector('.winamp-volume-icon');
+    if (!iconEl) return;
+
+    iconEl.classList.remove('muted');
+    if (state.volume === 0) {
+      iconEl.textContent = '\u{1F507}';
+      iconEl.classList.add('muted');
+    } else if (state.volume < 30) {
+      iconEl.textContent = '\u{1F509}';
+    } else if (state.volume < 70) {
+      iconEl.textContent = '\u{1F50A}';
+    } else {
+      iconEl.textContent = '\u{1F50A}';
+    }
+  }
+
+  /**
+   * Toggle mute/unmute.
+   */
+  var savedVolume = 80;
+
+  function toggleMute() {
+    if (state.volume > 0) {
+      savedVolume = state.volume;
+      setVolume(0);
+    } else {
+      setVolume(savedVolume);
     }
   }
 
@@ -392,6 +454,7 @@ window.Player = (function () {
     stop: stop,
     seekTo: seekTo,
     setVolume: setVolume,
+    toggleMute: toggleMute,
     setTrackEndCallback: setTrackEndCallback,
     getState: getState,
     formatTime: formatTime,

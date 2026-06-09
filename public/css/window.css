@@ -24,6 +24,22 @@
   overflow: hidden;
   min-width: 200px;
   min-height: 100px;
+  animation: window-open 0.2s ease-out;
+  transition: border-radius 0.15s ease;
+}
+
+@keyframes window-open {
+  0% { opacity: 0; transform: scale(0.92); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.window.closing {
+  animation: window-close 0.15s ease-in forwards;
+}
+
+@keyframes window-close {
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.92); }
 }
 
 /* ============================================
@@ -153,6 +169,19 @@
    ============================================ */
 .window-minimized {
   display: none;
+}
+
+.window.restoring {
+  animation: window-restore 0.2s ease-out;
+}
+
+@keyframes window-restore {
+  0% { opacity: 0; transform: scale(0.85) translateY(40px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.window.maximizing {
+  transition: left 0.2s ease-out, top 0.2s ease-out, width 0.2s ease-out, height 0.2s ease-out, border-radius 0.15s ease;
 }
 
 .window-maximized {
@@ -347,4 +376,153 @@
     #a8c0e4 80%,
     #8eaad8 100%
   );
+}
+
+/* ==========================================================================
+   Window Resize Handle
+   ========================================================================== */
+
+.window-resize-handle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 16px;
+  height: 16px;
+  cursor: nwse-resize;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.window:hover .window-resize-handle {
+  opacity: 1;
+}
+
+.window-resize-handle::before,
+.window-resize-handle::after {
+  content: '';
+  position: absolute;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 1px;
+}
+
+.window-resize-handle::before {
+  bottom: 3px;
+  right: 3px;
+  width: 8px;
+  height: 8px;
+  background:
+    linear-gradient(135deg, transparent 40%, rgba(0,0,0,0.18) 40%, rgba(0,0,0,0.18) 44%, transparent 44%),
+    linear-gradient(135deg, transparent 54%, rgba(0,0,0,0.18) 54%, rgba(0,0,0,0.18) 58%, transparent 58%),
+    linear-gradient(135deg, transparent 68%, rgba(0,0,0,0.18) 68%, rgba(0,0,0,0.18) 72%, transparent 72%);
+}
+
+.window-resize-handle::after {
+  bottom: 4px;
+  right: 4px;
+  width: 7px;
+  height: 7px;
+  background:
+    linear-gradient(135deg, transparent 40%, rgba(0,0,0,0.12) 40%, rgba(0,0,0,0.12) 44%, transparent 44%),
+    linear-gradient(135deg, transparent 54%, rgba(0,0,0,0.12) 54%, rgba(0,0,0,0.12) 58%, transparent 58%),
+    linear-gradient(135deg, transparent 68%, rgba(0,0,0,0.12) 68%, rgba(0,0,0,0.12) 72%, transparent 72%);
+}
+
+/* ==========================================================================
+   Toast Notifications
+   ========================================================================== */
+
+.toast-container {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 11000;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.xp-toast {
+  pointer-events: auto;
+  background: #ece9d8;
+  border: 2px solid #0054e3;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.35);
+  padding: 0;
+  min-width: 220px;
+  max-width: 320px;
+  font-size: 12px;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  animation: toast-in 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.15s ease;
+}
+
+.xp-toast:hover {
+  box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.45);
+}
+
+.xp-toast-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px 8px;
+}
+
+.xp-toast.hiding {
+  animation: toast-out 0.3s ease-in forwards;
+}
+
+@keyframes toast-in {
+  0% { opacity: 0; transform: translateX(40px) scale(0.95); }
+  100% { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+@keyframes toast-out {
+  0% { opacity: 1; transform: translateX(0) scale(1); }
+  100% { opacity: 0; transform: translateX(40px) scale(0.95); }
+}
+
+/* Small XP-style titlebar on toast */
+.xp-toast-titlebar {
+  background: linear-gradient(
+    180deg,
+    #0058ee 0%,
+    #3a8cff 15%,
+    #0d47e3 30%,
+    #2668e8 60%,
+    #0f48de 85%,
+    #0039c7 100%
+  );
+  padding: 2px 6px;
+  font-size: 11px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.xp-toast-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.xp-toast-body {
+  flex: 1;
+  overflow: hidden;
+}
+
+.xp-toast-message {
+  color: #333;
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

@@ -124,9 +124,30 @@
     if (tab) {
       if (isMinimized) {
         tab.classList.add('minimized');
+        tab.classList.remove('active');
       } else {
         tab.classList.remove('minimized');
       }
+    }
+  }
+
+  /**
+   * Highlight a tab as the focused/active window.
+   * @param {string} id
+   */
+  function focusTab(id) {
+    // Remove active from all tabs
+    if (tabsEl) {
+      var allTabs = tabsEl.querySelectorAll('.taskbar-tab');
+      for (var i = 0; i < allTabs.length; i++) {
+        allTabs[i].classList.remove('active');
+      }
+    }
+    // Add active to the specified tab
+    var tab = document.getElementById('taskbar-tab-' + id);
+    if (tab) {
+      tab.classList.remove('minimized');
+      tab.classList.add('active');
     }
   }
 
@@ -137,6 +158,7 @@
     updateClock:     updateClock,
     addWindowTab:    addWindowTab,
     removeWindowTab: removeWindowTab,
-    markMinimized:   markMinimized
+    markMinimized:   markMinimized,
+    focusTab:        focusTab
   };
 })();

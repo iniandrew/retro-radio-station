@@ -49,6 +49,10 @@
       addMenuItem('Change Wallpaper → Bliss', function () { setWallpaper('bliss'); });
       addMenuItem('Change Wallpaper → Aurora', function () { setWallpaper('aurora'); });
       addSeparator();
+      addMenuItem('Toggle Now Playing Widget', function () {
+        if (window.NowPlayingWidget) NowPlayingWidget.toggle();
+      });
+      addSeparator();
       addMenuItem('Refresh', function () { location.reload(); });
       addSeparator();
       addMenuItem('Properties', function () {

@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1200" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0%" stop-color="#0A1628"/>
+      <stop offset="25%" stop-color="#0D2137"/>
+      <stop offset="50%" stop-color="#102A45"/>
+      <stop offset="75%" stop-color="#14335A"/>
+      <stop offset="100%" stop-color="#1A3D6E"/>
+    </linearGradient>
+    <linearGradient id="aurora1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(80,200,255,0)"/>
+      <stop offset="20%" stop-color="rgba(80,200,255,0.15)"/>
+      <stop offset="50%" stop-color="rgba(60,180,240,0.25)"/>
+      <stop offset="80%" stop-color="rgba(40,140,220,0.15)"/>
+      <stop offset="100%" stop-color="rgba(30,100,200,0)"/>
+    </linearGradient>
+    <linearGradient id="aurora2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(100,255,200,0)"/>
+      <stop offset="25%" stop-color="rgba(80,220,180,0.08)"/>
+      <stop offset="50%" stop-color="rgba(60,200,160,0.18)"/>
+      <stop offset="75%" stop-color="rgba(50,180,150,0.1)"/>
+      <stop offset="100%" stop-color="rgba(40,140,120,0)"/>
+    </linearGradient>
+    <linearGradient id="aurora3" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="rgba(120,140,255,0)"/>
+      <stop offset="30%" stop-color="rgba(100,120,255,0.12)"/>
+      <stop offset="60%" stop-color="rgba(80,100,240,0.2)"/>
+      <stop offset="100%" stop-color="rgba(60,80,200,0)"/>
+    </linearGradient>
+    <linearGradient id="horizon" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(30,80,140,0.3)"/>
+      <stop offset="100%" stop-color="rgba(20,50,100,0.6)"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="20"/>
+    </filter>
+    <filter id="glow-sm">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+    <filter id="star-blur">
+      <feGaussianBlur stdDeviation="1"/>
+    </filter>
+    <radialGradient id="vignette" cx="0.5" cy="0.5" r="0.7">
+      <stop offset="0%" stop-color="rgba(0,0,0,0)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.4)"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Deep space background -->
+  <rect width="1920" height="1200" fill="url(#bg)"/>
+
+  <!-- Stars -->
+  <g fill="white">
+    <!-- Bright stars -->
+    <circle cx="150" cy="80" r="1.5" opacity="0.9"/>
+    <circle cx="420" cy="45" r="1.2" opacity="0.8"/>
+    <circle cx="680" cy="120" r="1.8" opacity="0.9"/>
+    <circle cx="950" cy="60" r="1.3" opacity="0.85"/>
+    <circle cx="1230" cy="100" r="1.6" opacity="0.9"/>
+    <circle cx="1500" cy="40" r="1.4" opacity="0.8"/>
+    <circle cx="1780" cy="90" r="1.5" opacity="0.9"/>
+    <circle cx="300" cy="200" r="1.3" opacity="0.7"/>
+    <circle cx="780" cy="250" r="1.1" opacity="0.75"/>
+    <circle cx="1100" cy="180" r="1.5" opacity="0.8"/>
+    <circle cx="1650" cy="220" r="1.2" opacity="0.7"/>
+    <circle cx="1850" cy="160" r="1.4" opacity="0.85"/>
+
+    <!-- Medium stars -->
+    <circle cx="80" cy="160" r="0.9" opacity="0.6"/>
+    <circle cx="230" cy="290" r="0.8" opacity="0.5"/>
+    <circle cx="520" cy="170" r="0.9" opacity="0.6"/>
+    <circle cx="640" cy="310" r="0.7" opacity="0.5"/>
+    <circle cx="870" cy="190" r="0.9" opacity="0.55"/>
+    <circle cx="1020" cy="280" r="0.8" opacity="0.5"/>
+    <circle cx="1350" cy="150" r="0.9" opacity="0.6"/>
+    <circle cx="1580" cy="300" r="0.7" opacity="0.5"/>
+    <circle cx="1720" cy="130" r="0.8" opacity="0.55"/>
+
+    <!-- Dim stars -->
+    <circle cx="50" cy="320" r="0.6" opacity="0.35"/>
+    <circle cx="180" cy="50" r="0.5" opacity="0.3"/>
+    <circle cx="360" cy="130" r="0.6" opacity="0.35"/>
+    <circle cx="490" cy="260" r="0.5" opacity="0.3"/>
+    <circle cx="570" cy="350" r="0.6" opacity="0.35"/>
+    <circle cx="750" cy="80" r="0.5" opacity="0.3"/>
+    <circle cx="830" cy="340" r="0.6" opacity="0.35"/>
+    <circle cx="1000" cy="50" r="0.5" opacity="0.3"/>
+    <circle cx="1150" cy="300" r="0.6" opacity="0.35"/>
+    <circle cx="1280" cy="250" r="0.5" opacity="0.3"/>
+    <circle cx="1420" cy="80" r="0.6" opacity="0.35"/>
+    <circle cx="1560" cy="180" r="0.5" opacity="0.3"/>
+    <circle cx="1690" cy="50" r="0.6" opacity="0.35"/>
+    <circle cx="1880" cy="280" r="0.5" opacity="0.3"/>
+  </g>
+
+  <!-- Star glow on brightest ones -->
+  <g filter="url(#star-blur)" fill="white" opacity="0.3">
+    <circle cx="680" cy="120" r="4"/>
+    <circle cx="1230" cy="100" r="3.5"/>
+    <circle cx="150" cy="80" r="3"/>
+    <circle cx="1780" cy="90" r="3"/>
+  </g>
+
+  <!-- Aurora borealis - main blue streak (large, blurred) -->
+  <path d="M200 100 Q400 50 600 120 Q800 180 1000 100 Q1200 30 1400 110 Q1600 180 1800 80 L1800 500 Q1600 600 1400 450 Q1200 350 1000 480 Q800 550 600 420 Q400 350 200 480 Z" fill="url(#aurora1)" filter="url(#glow)" opacity="0.9"/>
+
+  <!-- Aurora - secondary teal streak -->
+  <path d="M-100 150 Q200 80 500 200 Q700 300 900 180 Q1100 100 1300 220 Q1500 300 1700 150 Q1900 80 2050 200 L2050 550 Q1850 650 1650 500 Q1450 380 1250 500 Q1050 600 850 480 Q650 380 450 500 Q250 580 -100 520 Z" fill="url(#aurora2)" filter="url(#glow)" opacity="0.7"/>
+
+  <!-- Aurora - purple accent streak -->
+  <path d="M100 200 Q350 130 550 250 Q750 350 1000 220 Q1200 140 1400 260 Q1600 350 1800 200 L1800 450 Q1600 520 1400 400 Q1200 300 1000 420 Q750 500 550 400 Q350 320 100 440 Z" fill="url(#aurora3)" filter="url(#glow-sm)" opacity="0.6"/>
+
+  <!-- Aurora - sharp inner light (less blur) -->
+  <path d="M400 140 Q600 90 800 160 Q1000 230 1200 130 Q1400 60 1600 150 L1600 350 Q1400 400 1200 300 Q1000 220 800 310 Q600 380 400 300 Z" fill="rgba(100,200,255,0.08)" filter="url(#glow-sm)"/>
+
+  <!-- Horizon glow -->
+  <rect x="0" y="700" width="1920" height="200" fill="url(#horizon)"/>
+
+  <!-- Horizon light band -->
+  <rect x="0" y="820" width="1920" height="8" fill="rgba(60,120,180,0.15)" filter="url(#glow-sm)"/>
+
+  <!-- Mountain silhouettes -->
+  <path d="M-100 850 Q0 810 100 830 Q200 790 320 820 Q400 800 480 830 Q560 780 680 810 Q760 790 840 820 Q920 770 1040 800 Q1120 785 1200 810 Q1280 760 1400 795 Q1480 780 1560 810 Q1640 770 1760 800 Q1840 785 1920 810 L2020 900 L-100 900 Z" fill="#0A1A30" opacity="0.9"/>
+
+  <!-- Nearer hills -->
+  <path d="M-100 870 Q100 850 250 860 Q400 840 550 855 Q700 835 850 850 Q1000 830 1150 845 Q1300 825 1450 840 Q1600 820 1750 835 Q1870 825 2020 845 L2020 1200 L-100 1200 Z" fill="#081525"/>
+
+  <!-- Dark foreground -->
+  <path d="M-100 900 Q200 890 400 895 Q600 885 800 892 Q1000 882 1200 890 Q1400 880 1600 888 Q1800 878 2020 890 L2020 1200 L-100 1200 Z" fill="#060E1C"/>
+
+  <!-- Vignette -->
+  <rect width="1920" height="1200" fill="url(#vignette)"/>
+</svg>

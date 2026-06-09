@@ -288,6 +288,20 @@
       });
     }
 
+    // Click volume icon to toggle mute
+    var volumeIcon = body.querySelector('.winamp-volume-icon');
+    if (volumeIcon) {
+      volumeIcon.style.cursor = 'pointer';
+      volumeIcon.addEventListener('click', function () {
+        if (window.Player) {
+          Player.toggleMute();
+          // Sync slider position
+          var s = Player.getState();
+          volumeSlider.value = s.volume;
+        }
+      });
+    }
+
     // Seek slider
     var seekSlider = body.querySelector('.winamp-seek-slider');
     if (seekSlider) {
@@ -417,6 +431,115 @@
   }
 
   /**
+   * Initialize global keyboard shortcuts.
+   */
+  function initKeyboardShortcuts() {
+    document.addEventListener('keydown', function (e) {
+      // Ignore if typing in an input
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+      var winampOpen = window.WindowManager && WindowManager.getWindows().has('winamp');
+
+      switch (e.code) {
+        case 'Space':
+          e.preventDefault();
+          if (window.Player) {
+            var s = Player.getState();
+            if (s.isPlaying) Player.pause();
+            else if (s.currentTrack) Player.resume();
+            else if (window.Playlist) {
+              var first = Playlist.getFirst();
+              if (first) Playlist.playIndex(0);
+            }
+          }
+          break;
+
+        case 'ArrowRight':
+          if (e.ctrlKey || e.metaKey) {
+            e.preventDefault();
+            if (window.Player) {
+              var st = Player.getState();
+              Player.seekTo(Math.min(st.elapsed + 10, st.duration || 0));
+            }
+          }
+          break;
+
+        case 'ArrowLeft':
+          if (e.ctrlKey || e.metaKey) {
+            e.preventDefault();
+            if (window.Player) {
+              var st2 = Player.getState();
+              Player.seekTo(Math.max(st2.elapsed - 10, 0));
+            }
+          }
+          break;
+
+        case 'ArrowUp':
+          if (e.ctrlKey || e.metaKey) {
+            e.preventDefault();
+            if (window.Player) {
+              var s3 = Player.getState();
+              Player.setVolume(Math.min(s3.volume + 5, 100));
+            }
+          }
+          break;
+
+        case 'ArrowDown':
+          if (e.ctrlKey || e.metaKey) {
+            e.preventDefault();
+            if (window.Player) {
+              var s4 = Player.getState();
+              Player.setVolume(Math.max(s4.volume - 5, 0));
+            }
+          }
+          break;
+
+        case 'KeyM':
+          if (window.Player) Player.toggleMute();
+          break;
+
+        case 'KeyN':
+          if (e.ctrlKey || e.metaKey) break; // don't hijack new window
+          if (window.Playlist) Playlist.playNext(false, false);
+          break;
+
+        case 'KeyP':
+          if (window.Playlist) Playlist.playPrev();
+          break;
+
+        case 'KeyW':
+          if (winampOpen && window.WindowManager) {
+            WindowManager.close('winamp');
+          }
+          break;
+
+        case 'KeyT':
+          if (window.NowPlayingWidget) NowPlayingWidget.toggle();
+          break;
+      }
+    });
+  }
+
+  /**
+   * Hook into Playlist.add to show a toast when a track is added.
+   */
+  function hookPlaylistToast() {
+    var origAdd = Playlist.add;
+    Playlist.add = function (track) {
+      var result = origAdd(track);
+      if (track && window.Toast) {
+        Toast.show({
+          icon: '🎵',
+          title: 'Added to Playlist',
+          message: track.title || 'Unknown Track',
+          duration: 2500
+        });
+      }
+      return result;
+    };
+  }
+
+  /**
    * Fetch and render trending tracks.
    */
   function loadTrending() {
@@ -428,7 +551,7 @@
       return;
     }
 
-    listEl.innerHTML = '';
+    listEl.innerHTML = '<div class="xp-spinner">Loading...</div>';
 
     Api.fetchTrending()
       .then(function (items) {
@@ -479,6 +602,19 @@
       Taskbar.init();
     }
 
+    // Initialize keyboard shortcuts
+    initKeyboardShortcuts();
+
+    // Hook playlist add to show toasts
+    hookPlaylistToast();
+
+    // Restore now-playing widget if previously visible
+    try {
+      if (localStorage.getItem('np-widget-visible') === '1' && window.NowPlayingWidget) {
+        NowPlayingWidget.toggle(true);
+      }
+    } catch (e) { /* ignore */ }
+
     // Register the Winamp window
     if (window.WindowManager) {
       WindowManager.register('winamp', function () {
@@ -504,7 +640,7 @@
           height: '400px',
           content: async function (body) {
             body.style.padding = '0';
-            body.innerHTML = '<div style="padding:16px;color:#555;font-size:12px;font-family:Tahoma,sans-serif;">Loading trending tracks...</div>';
+            body.innerHTML = '<div class="xp-spinner">Loading trending...</div>';
             try {
               var tracks = await Api.fetchTrending();
               if (tracks.length === 0) {
