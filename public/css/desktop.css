@@ -1,0 +1,348 @@
+/* ==========================================================================
+   Desktop Shell — Wallpaper, Icons, Taskbar, Context Menu
+   Windows XP nostalgia theme for a web radio station
+   ========================================================================== */
+
+/* ---------- Reset ---------- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ---------- Base ---------- */
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 12px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: default;
+}
+
+/* ---------- Utility ---------- */
+.hidden {
+  display: none !important;
+}
+
+/* ==========================================================================
+   Desktop / Wallpaper
+   ========================================================================== */
+
+#desktop {
+  width: 100%;
+  height: calc(100% - 36px);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+#desktop.wallpaper-bliss {
+  /* CSS gradient approximation of XP Bliss — green hills + blue sky */
+  background-image:
+    radial-gradient(ellipse 120% 60% at 50% 110%, #4a8c3f 0%, transparent 70%),
+    radial-gradient(ellipse 80% 40% at 30% 100%, #68a357 0%, transparent 60%),
+    linear-gradient(180deg, #4a90d9 0%, #2b6cb0 45%, #3a8f3a 50%, #4a8c3f 70%, #5a9c4f 100%);
+  background-size: cover;
+  background-position: center;
+}
+
+#desktop.wallpaper-aurora {
+  /* CSS gradient approximation of Windows 7 Aurora — deep blue with light streaks */
+  background-image:
+    radial-gradient(ellipse 60% 40% at 30% 50%, rgba(100,180,255,0.15) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 30% at 70% 40%, rgba(80,140,220,0.1) 0%, transparent 60%),
+    linear-gradient(135deg, #0a1628 0%, #0d2137 25%, #1a4a6e 55%, #2d7ab8 100%);
+  background-size: cover;
+  background-position: center;
+}
+
+/* ==========================================================================
+   Desktop Icons
+   ========================================================================== */
+
+#desktop-icons {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 16px;
+  height: 100%;
+  align-content: flex-start;
+}
+
+.desktop-icon {
+  width: 80px;
+  text-align: center;
+  padding: 4px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.desktop-icon:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.desktop-icon.selected {
+  background-color: rgba(51, 102, 204, 0.55);
+  border: 1px dotted rgba(255, 255, 255, 0.7);
+}
+
+.desktop-icon-img {
+  font-size: 32px;
+  line-height: 1;
+  margin-bottom: 4px;
+  pointer-events: none;
+}
+
+.desktop-icon-label {
+  color: #fff;
+  font-size: 11px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  word-wrap: break-word;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   Context Menu
+   ========================================================================== */
+
+.context-menu {
+  position: fixed;
+  background: #fff;
+  border: 1px solid #868686;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.35);
+  z-index: 10000;
+  padding: 2px 0;
+  min-width: 200px;
+  font-family: Tahoma, 'Segoe UI', sans-serif;
+  font-size: 12px;
+}
+
+.context-menu-item {
+  padding: 4px 24px;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: Tahoma, 'Segoe UI', sans-serif;
+  white-space: nowrap;
+}
+
+.context-menu-item:hover {
+  background: #316ac5;
+  color: #fff;
+}
+
+.context-menu-separator {
+  height: 1px;
+  background: #c0c0c0;
+  margin: 2px 4px;
+}
+
+/* ==========================================================================
+   Taskbar
+   ========================================================================== */
+
+#taskbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 36px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  z-index: 9500;
+  box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.3);
+
+  /* XP-style blue gradient */
+  background: linear-gradient(
+    to bottom,
+    #3168d5 0%,
+    #4e8ef5 3%,
+    #245cdc 6%,
+    #1941a5 10%,
+    #245cdc 14%,
+    #4e8ef5 20%,
+    #3a7af2 50%,
+    #1e55c9 80%,
+    #1941a5 90%,
+    #245cdc 94%,
+    #4e8ef5 97%,
+    #3168d5 100%
+  );
+  border-top: 1px solid #0e3dab;
+}
+
+/* ---------- Start Button ---------- */
+
+.taskbar-start {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  min-width: 100px;
+  padding: 0 12px;
+  margin-left: 4px;
+  border: none;
+  border-radius: 0 8px 8px 0;
+  cursor: pointer;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 14px;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.5px;
+
+  /* Green gradient */
+  background: linear-gradient(
+    to bottom,
+    #5cb85c 0%,
+    #44a844 10%,
+    #3c9e3c 30%,
+    #2d8c2d 50%,
+    #287028 70%,
+    #3c9e3c 90%,
+    #5cb85c 100%
+  );
+  border: 1px solid #1a5c1a;
+  border-left: none;
+  border-radius: 0 10px 10px 0;
+}
+
+.taskbar-start:hover {
+  background: linear-gradient(
+    to bottom,
+    #73d073 0%,
+    #5cc85c 10%,
+    #52be52 30%,
+    #44ae44 50%,
+    #389838 70%,
+    #52be52 90%,
+    #73d073 100%
+  );
+}
+
+.taskbar-start:active {
+  background: linear-gradient(
+    to bottom,
+    #2d8c2d 0%,
+    #389838 50%,
+    #2d8c2d 100%
+  );
+}
+
+/* ---------- Tabs Container ---------- */
+
+.taskbar-tabs {
+  flex: 1;
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  padding: 0 4px;
+  height: 100%;
+  align-items: center;
+}
+
+.taskbar-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+/* ---------- Individual Tab ---------- */
+
+.taskbar-tab {
+  display: flex;
+  align-items: center;
+  height: 26px;
+  max-width: 150px;
+  min-width: 60px;
+  padding: 0 8px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 11px;
+  font-family: Tahoma, 'Segoe UI', sans-serif;
+  color: #fff;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  /* Blue gradient matching taskbar */
+  background: linear-gradient(
+    to bottom,
+    #3a7af2 0%,
+    #2d6ae0 30%,
+    #245cdc 60%,
+    #1e55c9 100%
+  );
+  border: 1px solid #1941a5;
+  border-bottom: none;
+}
+
+.taskbar-tab:hover {
+  background: linear-gradient(
+    to bottom,
+    #5e9ef8 0%,
+    #4e8ef5 30%,
+    #3a7af2 60%,
+    #3068e0 100%
+  );
+}
+
+.taskbar-tab:active {
+  background: linear-gradient(
+    to bottom,
+    #1941a5 0%,
+    #1e55c9 50%,
+    #1941a5 100%
+  );
+}
+
+.taskbar-tab.minimized {
+  background: linear-gradient(
+    to bottom,
+    #7bade0 0%,
+    #6998d4 30%,
+    #5a88c8 60%,
+    #4e7ab8 100%
+  );
+  border-color: #3c6ca0;
+}
+
+.taskbar-tab.minimized:hover {
+  background: linear-gradient(
+    to bottom,
+    #94c0ee 0%,
+    #82b0e0 30%,
+    #72a0d4 60%,
+    #6692c8 100%
+  );
+}
+
+/* ---------- System Tray ---------- */
+
+.taskbar-tray {
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  height: 100%;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#taskbar-clock {
+  color: #fff;
+  font-size: 11px;
+  font-family: Tahoma, 'Segoe UI', sans-serif;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+}

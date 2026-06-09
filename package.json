@@ -1,0 +1,17 @@
+{
+  "name": "retro-radio",
+  "version": "0.1.0",
+  "description": "Nostalgia web radio with Winamp desktop experience",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "better-sqlite3": "^12.10.0",
+    "express": "^5.2.1"
+  }
+}

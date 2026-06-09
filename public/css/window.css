@@ -1,0 +1,350 @@
+/* ============================================
+   Windows Container
+   ============================================ */
+#windows-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+}
+
+/* ============================================
+   XP Window
+   ============================================ */
+.window {
+  position: absolute;
+  background: #ece9d8;
+  border: 2px solid #0054e3;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  pointer-events: auto;
+  overflow: hidden;
+  min-width: 200px;
+  min-height: 100px;
+}
+
+/* ============================================
+   XP Title Bar Gradient
+   ============================================ */
+.window-titlebar {
+  background: linear-gradient(
+    180deg,
+    #0058ee 0%,
+    #3a8cff 3%,
+    #0d47e3 5%,
+    #2d7aef 8%,
+    #6baaf7 20%,
+    #4b93f4 40%,
+    #2668e8 60%,
+    #1a56e4 80%,
+    #0f48de 95%,
+    #0039c7 100%
+  );
+  padding: 3px 4px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.window-title {
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-left: 4px;
+  user-select: none;
+  cursor: default;
+}
+
+.window-controls {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   Window Control Buttons
+   ============================================ */
+.window-btn {
+  width: 21px;
+  height: 21px;
+  background: linear-gradient(
+    180deg,
+    #3a8cff 0%,
+    #1a5cd8 45%,
+    #1358c4 50%,
+    #1a6aef 55%,
+    #4b93f4 100%
+  );
+  color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  line-height: 1;
+  font-family: 'Marlett', sans-serif;
+  padding: 0;
+}
+
+.window-btn:hover {
+  background: linear-gradient(
+    180deg,
+    #6baaf7 0%,
+    #4b93f4 30%,
+    #3a8cff 50%,
+    #6bb3ff 70%,
+    #9ac4ff 100%
+  );
+}
+
+.window-btn:active {
+  background: linear-gradient(
+    180deg,
+    #0d47e3 0%,
+    #1358c4 50%,
+    #0a3aad 100%
+  );
+}
+
+.window-btn-close:hover {
+  background: linear-gradient(
+    180deg,
+    #e05a5a 0%,
+    #c0392b 30%,
+    #a93226 50%,
+    #e74c3c 70%,
+    #f1948a 100%
+  );
+}
+
+.window-btn-close:active {
+  background: linear-gradient(
+    180deg,
+    #922b21 0%,
+    #7b241c 50%,
+    #641e16 100%
+  );
+}
+
+/* ============================================
+   Window Body
+   ============================================ */
+.window-body {
+  flex: 1;
+  overflow: auto;
+  background: #ece9d8;
+  position: relative;
+}
+
+/* ============================================
+   Window States
+   ============================================ */
+.window-minimized {
+  display: none;
+}
+
+.window-maximized {
+  border-radius: 0;
+}
+
+/* ============================================
+   Dialog System
+   ============================================ */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+.xp-dialog {
+  background: #ece9d8;
+  border: 2px solid #0054e3;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.4);
+  width: 380px;
+  max-width: 90vw;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.xp-dialog-titlebar {
+  background: linear-gradient(
+    180deg,
+    #0058ee 0%,
+    #3a8cff 3%,
+    #0d47e3 5%,
+    #2d7aef 8%,
+    #6baaf7 20%,
+    #4b93f4 40%,
+    #2668e8 60%,
+    #1a56e4 80%,
+    #0f48de 95%,
+    #0039c7 100%
+  );
+  padding: 4px 8px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+  border-radius: 6px 6px 0 0;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.xp-dialog-body {
+  padding: 20px 24px 16px;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.xp-dialog-error,
+.xp-dialog-info {
+  font-size: 36px;
+  flex-shrink: 0;
+  line-height: 1;
+  text-align: center;
+  min-width: 40px;
+}
+
+.xp-dialog-message {
+  font-size: 12px;
+  color: #000;
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.4;
+  flex: 1;
+  padding-top: 2px;
+}
+
+.xp-dialog-input {
+  width: 100%;
+  margin-top: 8px;
+  padding: 4px 6px;
+  border: 1px solid #7f9db9;
+  font-size: 12px;
+  font-family: inherit;
+  box-sizing: border-box;
+  outline: none;
+  background: #fff;
+}
+
+.xp-dialog-input:focus {
+  border-color: #0054e3;
+}
+
+.xp-dialog-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 8px 24px 16px;
+  flex-shrink: 0;
+}
+
+.xp-dialog-btn {
+  min-width: 75px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  border: 1px solid #003c74;
+  border-radius: 3px;
+  background: linear-gradient(
+    180deg,
+    #f5f5f5 0%,
+    #ece9d8 8%,
+    #d6d0c4 20%,
+    #ece9d8 50%,
+    #d6d0c4 80%,
+    #ece9d8 92%,
+    #f5f5f5 100%
+  );
+  color: #000;
+  outline: none;
+}
+
+.xp-dialog-btn:hover {
+  background: linear-gradient(
+    180deg,
+    #dce8f7 0%,
+    #c4d5ee 8%,
+    #a8c0e4 20%,
+    #c4d5ee 50%,
+    #a8c0e4 80%,
+    #c4d5ee 92%,
+    #dce8f7 100%
+  );
+  border-color: #0054e3;
+}
+
+.xp-dialog-btn:active {
+  background: linear-gradient(
+    180deg,
+    #a8c0e4 0%,
+    #c4d5ee 30%,
+    #dce8f7 60%,
+    #c4d5ee 80%,
+    #a8c0e4 100%
+  );
+}
+
+.xp-dialog-btn-primary {
+  font-weight: bold;
+  border: 2px solid #0054e3;
+  background: linear-gradient(
+    180deg,
+    #e8f0fb 0%,
+    #d4e2f6 8%,
+    #b8cff0 20%,
+    #d4e2f6 50%,
+    #b8cff0 80%,
+    #d4e2f6 92%,
+    #e8f0fb 100%
+  );
+}
+
+.xp-dialog-btn-primary:hover {
+  background: linear-gradient(
+    180deg,
+    #c4d5ee 0%,
+    #a8c0e4 8%,
+    #8eaad8 20%,
+    #a8c0e4 50%,
+    #8eaad8 80%,
+    #a8c0e4 92%,
+    #c4d5ee 100%
+  );
+}
+
+.xp-dialog-btn-primary:active {
+  background: linear-gradient(
+    180deg,
+    #8eaad8 0%,
+    #a8c0e4 30%,
+    #c4d5ee 60%,
+    #a8c0e4 80%,
+    #8eaad8 100%
+  );
+}
