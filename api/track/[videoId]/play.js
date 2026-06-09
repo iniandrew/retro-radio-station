@@ -1,9 +1,27 @@
 const { Redis } = require('@upstash/redis');
 
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN,
-});
+let redis = null;
+try {
+  if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+    redis = new Redis({
+      url: process.env.UPSTASH_REDIS_REST_URL,
+      token: process.env.UPSTASH_REDIS_REST_TOKEN,
+    });
+  } else {
+    console.warn('Upstash Redis not configured — trending disabled');
+  }
+}
+
+async function getTracks() {
+  if (!redis) return [];
+  try { return JSON.parse(await redis.get('trending') || '[]'); }
+  catch { return []; }
+}
+
+async function saveTracks(tracks) {
+  if (!redis) return;
+  await redis.set('trending', JSON.stringify(tracks));
+}
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -16,8 +34,7 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    let tracks = [];
-    try { tracks = JSON.parse(await redis.get('trending') || '[]'); } catch { tracks = []; }
+    const tracks = await getTracks();
     const track = tracks.find(t => t.videoId === videoId);
 
     if (track) {
@@ -33,7 +50,7 @@ module.exports = async function handler(req, res) {
       });
     }
 
-    await redis.set('trending', JSON.stringify(tracks));
+    await saveTracks(tracks);
     res.json({ success: true });
   } catch (err) {
     console.error('Redis write failed:', err);
