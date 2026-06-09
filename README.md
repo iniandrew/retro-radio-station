@@ -5,7 +5,7 @@ A nostalgia-driven web radio station themed as a **Windows XP desktop** with a p
 ![Windows XP](https://img.shields.io/badge/Theme-Windows%20XP-0078D4?style=flat-square)
 ![Vanilla JS](https://img.shields.io/badge/Frontend-Vanilla%20JS-F7DF1E?style=flat-square)
 ![Node.js](https://img.shields.io/badge/Backend-Node.js-339933?style=flat-square)
-![SQLite](https://img.shields.io/badge/Database-SQLite-003B57?style=flat-square)
+![Vercel](https://img.shields.io/badge/Deploy-Vercel-black?style=flat-square)
 
 ## Features
 
@@ -45,34 +45,41 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 | Layer | Technology |
 |-------|-----------|
 | Frontend | Vanilla HTML, CSS, JavaScript (no framework) |
-| Backend | Node.js + Express |
-| Database | SQLite via better-sqlite3 |
+| Backend | Node.js + Express (local) / Vercel Serverless Functions (production) |
+| Database | SQLite via better-sqlite3 (local) / Upstash Redis (production) |
 | Video | YouTube iframe API + oEmbed API |
 
 ## Project Structure
 
 ```
 media-players/
-├── server.js              # Express server + API endpoints
-├── db.js                  # SQLite database module
-├── package.json
-├── public/
-│   ├── index.html         # Desktop shell
+├── server.js              # Express server + API endpoints (local dev)
+├── db.js                  # SQLite database module (local dev)
+├── vercel.json             # Vercel deployment config
+├── api/                   # Vercel serverless functions (production)
+│   ├── track.js           # POST /api/track — resolve YouTube URL
+│   ├── trending.js        # GET /api/trending — get top tracks
+│   └── track/
+│       └── [videoId]/
+│           └── play.js    # POST /api/track/:videoId/play — record play
+├── public/                 # Static frontend files
+│   ├── index.html
 │   ├── css/
-│   │   ├── desktop.css    # Wallpaper, icons, taskbar, context menu
-│   │   ├── window.css     # Window manager + XP dialog styles
-│   │   ├── winamp.css     # Winamp Classic player skin
-│   │   └── playlist.css   # Playlist panel + trending styles
+│   │   ├── desktop.css
+│   │   ├── window.css
+│   │   ├── winamp.css
+│   │   └── playlist.css
 │   └── js/
-│       ├── app.js         # Entry point, wires everything together
-│       ├── desktop.js     # Desktop icons, wallpaper, context menu
-│       ├── taskbar.js     # Taskbar with clock and window tabs
-│       ├── window-manager.js  # Draggable/min/max/close windows
-│       ├── dialog.js      # XP-style dialog boxes
-│       ├── player.js     # YouTube iframe API integration
-│       ├── playlist.js    # Playlist state management
-│       └── api.js         # Backend API client
-├── data/                  # SQLite database (gitignored)
+│       ├── app.js
+│       ├── desktop.js
+│       ├── taskbar.js
+│       ├── window-manager.js
+│       ├── dialog.js
+│       ├── player.js
+│       ├── playlist.js
+│       └── api.js
+├── data/                   # SQLite database (local only, gitignored)
+└── package.json
 ```
 
 ## API Endpoints
@@ -87,24 +94,37 @@ media-players/
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `PORT` | `3000` | Server port |
+| `PORT` | `3000` | Server port (local dev only) |
+| `UPSTASH_REDIS_REST_URL` | — | Upstash Redis REST URL (set by Vercel) |
+| `UPSTASH_REDIS_REST_TOKEN` | — | Upstash Redis REST token (set by Vercel) |
 
 ## Deployment
 
-### GitHub Pages (frontend only)
+### Vercel (recommended)
 
-Push to `main` to auto-deploy. The workflow copies `public/` to GitHub Pages.
+Full stack — player, playlist, and trending all work.
 
-> **Note:** GitHub Pages serves static files only. The player and playlist work. The trending feature requires the Express backend — use a hosting platform that supports Node.js for the full experience.
+1. Push repo to GitHub
+2. Import on [vercel.com](https://vercel.com) — auto-detects config
+3. Vercel dashboard → **Storage** → add **Upstash Redis** (free tier)
+4. Redeploy — env vars auto-set, trending works
 
-### Full stack (with trending)
+```bash
+# Local dev still uses Express + SQLite (no Redis needed)
+npm start
 
-Deploy to any Node.js host — [Render](https://render.com), [Railway](https://railway.app), [Vercel](https://vercel.com), [Fly.io](https://fly.io), etc.
+# Deploy to Vercel
+vercel
+```
+
+### Local Development
 
 ```bash
 npm install
-npm start    # or npm run dev for hot reload
+npm start
 ```
+
+Uses Express + SQLite. No Redis or Vercel needed.
 
 ## License
 
