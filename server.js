@@ -69,5 +69,5 @@ app.get('/api/trending', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Retro Radio Station running at http://localhost:${PORT}`);
+  console.log(`RetroBox running at http://localhost:${PORT}`);
 });

@@ -340,7 +340,12 @@ window.Player = (function () {
    * Play a track.
    * @param {Object} track - { videoId, title, url }
    */
-  function play(track) {
+  /**
+   * Play a track.
+   * @param {Object} track - { videoId, title, url }
+   * @param {HTMLElement} [container] - Optional video container. Defaults to .winamp-video-area
+   */
+  function play(track, container) {
     if (!track) return;
 
     state.currentTrack = track;
@@ -348,7 +353,7 @@ window.Player = (function () {
     state.elapsed = 0;
     state.duration = 0;
 
-    var videoArea = document.querySelector('.winamp-video-area');
+    var videoArea = container || document.querySelector('.winamp-video-area');
     if (!videoArea) return;
 
     createYouTubePlayer(videoArea, track.videoId);

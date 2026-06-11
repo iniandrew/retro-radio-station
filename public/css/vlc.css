@@ -1,0 +1,437 @@
+/* ==========================================================================
+   VLC Media Player Skin (2.x era)
+   ========================================================================== */
+
+/* ---------- VLC Player Container ---------- */
+
+.vlc-player {
+  background: #2b2b2b;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ---------- VLC Title Bar (orange cone branding) ---------- */
+
+.vlc-titlebar {
+  background: linear-gradient(180deg, #4a4a4a 0%, #3a3a3a 40%, #2e2e2e 100%);
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  height: 32px;
+  flex-shrink: 0;
+  border-bottom: 1px solid #555;
+  user-select: none;
+  gap: 8px;
+}
+
+.vlc-cone-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+/* CSS-only VLC traffic cone */
+.vlc-cone-icon::before {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 14px solid #ff8800;
+}
+
+.vlc-cone-icon::after {
+  content: '';
+  position: absolute;
+  bottom: 1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-bottom: 7px solid #ffaa33;
+}
+
+.vlc-titlebar-text {
+  color: #ccc;
+  font-size: 12px;
+  font-weight: normal;
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.vlc-titlebar-close {
+  width: 20px;
+  height: 20px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  color: #999;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: all 0.15s ease;
+}
+
+.vlc-titlebar-close:hover {
+  background: #e05a5a;
+  border-color: #c0392b;
+  color: #fff;
+}
+
+/* ---------- VLC Menu Bar ---------- */
+
+.vlc-menubar {
+  background: linear-gradient(180deg, #404040 0%, #383838 100%);
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  height: 22px;
+  flex-shrink: 0;
+  border-bottom: 1px solid #4a4a4a;
+  gap: 0;
+}
+
+.vlc-menu-item {
+  color: #ccc;
+  font-size: 11px;
+  padding: 2px 8px;
+  cursor: default;
+  border-radius: 2px;
+  transition: background 0.1s ease;
+}
+
+.vlc-menu-item:hover {
+  background: #555;
+  color: #fff;
+}
+
+/* ---------- VLC Video Output Area ---------- */
+
+.vlc-video-area {
+  background: #000;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  min-height: 0;
+}
+
+.vlc-video-area iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.vlc-video-placeholder {
+  color: #444;
+  font-size: 13px;
+  text-align: center;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.vlc-video-placeholder-cone {
+  font-size: 48px;
+  opacity: 0.15;
+}
+
+.vlc-video-placeholder-text {
+  font-size: 12px;
+  color: #555;
+}
+
+/* ---------- VLC Controls Bar ---------- */
+
+.vlc-controls {
+  background: linear-gradient(180deg, #404040 0%, #363636 50%, #2e2e2e 100%);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  border-top: 1px solid #555;
+}
+
+/* --- Progress Bar --- */
+
+.vlc-progress {
+  padding: 6px 10px 4px;
+}
+
+.vlc-progress-bar {
+  position: relative;
+  width: 100%;
+  height: 6px;
+  background: #1a1a1a;
+  border-radius: 3px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.vlc-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff8800, #ffaa33);
+  border-radius: 3px;
+  width: 0%;
+  transition: width 0.25s linear;
+}
+
+.vlc-progress-bar:hover .vlc-progress-fill {
+  background: linear-gradient(90deg, #ff9922, #ffbb44);
+  height: 8px;
+  margin-top: -1px;
+}
+
+/* --- Time Display --- */
+
+.vlc-time {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  gap: 4px;
+  height: 18px;
+}
+
+.vlc-time-current {
+  color: #ccc;
+  font-size: 10px;
+  font-family: 'Consolas', 'Courier New', monospace;
+  min-width: 38px;
+}
+
+.vlc-time-separator {
+  color: #666;
+  font-size: 10px;
+}
+
+.vlc-time-total {
+  color: #888;
+  font-size: 10px;
+  font-family: 'Consolas', 'Courier New', monospace;
+  min-width: 38px;
+}
+
+.vlc-track-title {
+  color: #aaa;
+  font-size: 10px;
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+/* --- Transport Buttons --- */
+
+.vlc-transport {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 10px 4px;
+  gap: 2px;
+}
+
+.vlc-btn {
+  width: 28px;
+  height: 22px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  color: #ccc;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.vlc-btn:hover {
+  background: #555;
+  border-color: #666;
+  color: #fff;
+}
+
+.vlc-btn:active {
+  background: #222;
+}
+
+.vlc-btn-play {
+  width: 32px;
+  height: 24px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #ff8800, #e07700);
+  color: #fff;
+  font-size: 13px;
+  font-weight: bold;
+  border: 1px solid #cc6600;
+}
+
+.vlc-btn-play:hover {
+  background: linear-gradient(180deg, #ff9922, #e08811);
+  border-color: #ff8800;
+}
+
+.vlc-btn-play:active {
+  background: linear-gradient(180deg, #cc6600, #aa5500);
+}
+
+.vlc-btn-play.playing {
+  background: linear-gradient(180deg, #ff6600, #dd5500);
+}
+
+/* --- Volume --- */
+
+.vlc-volume {
+  display: flex;
+  align-items: center;
+  padding: 2px 10px 6px;
+  gap: 6px;
+}
+
+.vlc-volume-icon {
+  color: #aaa;
+  font-size: 13px;
+  cursor: pointer;
+  flex-shrink: 0;
+  width: 18px;
+  text-align: center;
+  transition: color 0.15s ease;
+}
+
+.vlc-volume-icon:hover {
+  color: #ff8800;
+}
+
+.vlc-volume-icon.muted {
+  color: #664444;
+}
+
+.vlc-volume-slider {
+  flex: 1;
+  max-width: 120px;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: linear-gradient(to right, #ff8800 var(--vlc-vol-pct, 80%), #1a1a1a var(--vlc-vol-pct, 80%));
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.vlc-volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #ffaa33, #ff8800);
+  cursor: pointer;
+  border: 1px solid #cc6600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.vlc-volume-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #ffaa33, #ff8800);
+  cursor: pointer;
+  border: 1px solid #cc6600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.vlc-volume-slider::-moz-range-track {
+  background: transparent;
+  border: none;
+}
+
+.vlc-volume-slider::-moz-range-progress {
+  background: #ff8800;
+  border-radius: 2px;
+  height: 4px;
+}
+
+/* ---------- VLC Status Bar ---------- */
+
+.vlc-statusbar {
+  background: linear-gradient(180deg, #2e2e2e 0%, #282828 100%);
+  display: flex;
+  align-items: center;
+  padding: 2px 8px;
+  height: 20px;
+  flex-shrink: 0;
+  border-top: 1px solid #3a3a3a;
+  gap: 12px;
+}
+
+.vlc-status-text {
+  color: #666;
+  font-size: 10px;
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.vlc-status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #444;
+  flex-shrink: 0;
+  transition: background 0.3s ease;
+}
+
+.vlc-status-indicator.playing {
+  background: #ff8800;
+  box-shadow: 0 0 6px rgba(255, 136, 0, 0.5);
+}
+
+.vlc-status-indicator.buffering {
+  background: #ffcc00;
+  animation: vlc-buffer-pulse 1s ease-in-out infinite;
+}
+
+@keyframes vlc-buffer-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ---------- Drop Zone ---------- */
+
+.vlc-drop-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  color: #ff8800;
+  font-size: 14px;
+  border: 2px dashed #ff8800;
+}
+
+.vlc-player.drag-over .vlc-drop-overlay {
+  display: flex;
+}

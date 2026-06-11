@@ -630,6 +630,24 @@
         };
       });
 
+      // Register the VLC player window
+      WindowManager.register('vlc', function () {
+        return {
+          title: '\u{1F3AC} VLC media player',
+          x: 120,
+          y: 60,
+          width: 560,
+          height: 420,
+          content: function (body) {
+            body.style.padding = '0';
+            body.style.overflow = 'hidden';
+            if (window.VlcPlayer) {
+              VlcPlayer.buildVlcContent(body);
+            }
+          }
+        };
+      });
+
       // Register the standalone Trending window
       WindowManager.register('trending', function () {
         return {

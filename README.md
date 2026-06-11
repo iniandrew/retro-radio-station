@@ -1,6 +1,6 @@
-# 🎵 Retro Radio Station
+# 🎵 RetroBox
 
-A nostalgia-driven web radio station themed as a **Windows XP desktop** with a pixel-perfect **Winamp Classic** media player. Paste YouTube URLs to discover and play old music.
+A nostalgia-driven desktop themed as **Windows XP** with classic media players — **Winamp Classic** and **VLC**. Paste YouTube URLs to discover and play old music.
 
 ![Windows XP](https://img.shields.io/badge/Theme-Windows%20XP-0078D4?style=flat-square)
 ![Vanilla JS](https://img.shields.io/badge/Frontend-Vanilla%20JS-F7DF1E?style=flat-square)

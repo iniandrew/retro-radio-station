@@ -4,6 +4,7 @@
   // ── Icons definition ──────────────────────────────────────────────────
   var ICONS = [
     { id: 'my-music',    label: 'My Music',    emoji: '\u{1F3B5}', action: 'open-winamp' },
+    { id: 'vlc-player',  label: 'VLC Player',  emoji: '\u{1F3AC}', action: 'open-vlc' },
     { id: 'trending',    label: 'Trending',     emoji: '\u{1F525}', action: 'open-trending' },
     { id: 'about',       label: 'About',        emoji: '\u{2139}\u{FE0F}', action: 'open-about' },
     { id: 'recycle-bin', label: 'Recycle Bin',  emoji: '\u{1F5D1}\u{FE0F}', action: null }
@@ -58,7 +59,7 @@
       addMenuItem('Properties', function () {
         // Future: open a properties dialog
         if (window.Dialog && window.Dialog.showInfo) {
-          window.Dialog.showInfo('Desktop Properties', 'Retro Radio Station Desktop\n\nWallpaper: ' + (localStorage.getItem('wallpaper') || 'bliss'));
+          window.Dialog.showInfo('Desktop Properties', 'RetroBox Desktop\n\nWallpaper: ' + (localStorage.getItem('wallpaper') || 'bliss'));
         }
       });
 
@@ -180,6 +181,12 @@
         }
         break;
 
+      case 'open-vlc':
+        if (window.WindowManager && window.WindowManager.open) {
+          window.WindowManager.open('vlc');
+        }
+        break;
+
       case 'open-trending':
         if (window.WindowManager && window.WindowManager.open) {
           window.WindowManager.open('trending');
@@ -189,8 +196,8 @@
       case 'open-about':
         if (window.Dialog && window.Dialog.showInfo) {
           window.Dialog.showInfo(
-            'About Retro Radio',
-            'Retro Radio Station v1.0\n\nA nostalgia web radio themed\nas a Windows XP desktop.\n\nDouble-click icons to explore!'
+            'About RetroBox',
+            'RetroBox v1.0\n\nA nostalgia desktop themed\nas Windows XP with classic\nmedia players.\n\nDouble-click icons to explore!'
           );
         }
         break;

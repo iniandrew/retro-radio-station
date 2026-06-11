@@ -1,7 +1,7 @@
 {
-  "name": "retro-radio",
+  "name": "retrobox",
   "version": "0.1.0",
-  "description": "Nostalgia web radio with Winamp desktop experience",
+  "description": "Nostalgia desktop with classic media players on Windows XP",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
